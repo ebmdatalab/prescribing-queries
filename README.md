@@ -143,3 +143,29 @@ ORDER BY month
 ## Other examples
 
 * [Diabetes drugs per list size, grouped by year and CCG](https://github.com/ebmdatalab/prescribing-queries/issues/1)
+
+## Practice settings
+
+The different kinds of practice available in the `setting` column of the `practices` table are as follows:
+
+* 0 = Other
+* 1 = WIC Practice
+* 2 = OOH Practice
+* 3 = WIC + OOH Practice
+* 4 = GP Practice
+* 8 = Public Health Service
+* 9 = Community Health Service
+* 10 = Hospital Service
+* 11 = Optometry Service
+* 12 = Urgent & Emergency Care
+* 13 = Hospice
+* 14 = Care Home / Nursing Home
+* 15 = Border Force
+* 16 = Young Offender Institution
+* 17 = Secure Training Centre
+* 18 = Secure Children's Home
+* 19 = Immigration Removal Centre
+* 20 = Court
+* 21 = Police Custody
+* 22 = Sexual Assault Referral Centre (SARC)
+* 24 = Other
