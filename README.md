@@ -6,7 +6,7 @@ Documentation about common queries against the prescribing dataset.
 
 * `hscic:prescribing`: the main prescribing dataset. Updated monthly
 * `hscic:practices`: all the practices in England. Updated monthly. Practices with a `setting` of `4` are standard GP practices
-* `hscic:praactice_statistics`: total list size, STAR-PU, ASTRO-PU and list sizes stratified by gender and age group for each practice. Updated monthly.
+* `hscic:practice_statistics`: total list size, STAR-PU, ASTRO-PU and list sizes stratified by gender and age group for each practice. Updated monthly.
 * `hscic:presentation`: ADQs and related data for each BNF code. Currently updated manually as needed
 
 ## Common queries
