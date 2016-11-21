@@ -144,6 +144,7 @@ ORDER BY month
 
 * [Diabetes drugs per list size, grouped by year and CCG](https://github.com/ebmdatalab/prescribing-queries/issues/1#issuecomment-255042978)
 * [Diabetes drugs: total actual cost per month, grouped by CCG, standard practices only](https://github.com/ebmdatalab/prescribing-queries/issues/1#issuecomment-255061302)
+* [Include cost totals for numerator and denominator, for a specific date window](https://github.com/ebmdatalab/prescribing-queries/issues/9)
 
 ## Practice settings
 
