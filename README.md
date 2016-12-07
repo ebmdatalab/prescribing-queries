@@ -12,7 +12,12 @@ Then follow [this quickstart](https://cloud.google.com/bigquery/quickstart-web-u
 
 BigQuery provides a SQL-like interface to massive datasets.  It has two flavours, "legacy" and "standard". When running a query, the default is "legacy"; you must select "standard" in the options section to use that.  Nearly all the examples here are in "standard" format, which is compatible with standard SQL. However, sometimes it is necessary to use "legacy" format as some functions have not yet been ported by Google to the newer format.
 
-Standard SQL supports [temp tables](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#with_query_name) which can make your queries more readable than using lots of subselects.
+* [Standard SQL documentation](https://cloud.google.com/bigquery/docs/reference/standard-sql/)
+* [Legacy SQL documentation](https://cloud.google.com/bigquery/docs/reference/legacy-sql)
+
+Standard SQL supports [temp tables](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#with_query_name) which can make your queries more readable than using lots of subqueries.
+
+The main advantage of Legacy SQL is its more extensive range of [aggregate functions](https://cloud.google.com/bigquery/docs/reference/legacy-sql#functions), and in particular, [window functions](https://cloud.google.com/bigquery/docs/reference/legacy-sql#syntax-window-functions).  However, it is something of a moving target with new functions being added to Standard SQL all the time.
 
 ### Billing
 
