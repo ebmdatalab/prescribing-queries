@@ -12,6 +12,8 @@ Then follow [this quickstart](https://cloud.google.com/bigquery/quickstart-web-u
 
 BigQuery provides a SQL-like interface to massive datasets.  It has two flavours, "legacy" and "standard". When running a query, the default is "legacy"; you must select "standard" in the options section to use that.  Nearly all the examples here are in "standard" format, which is compatible with standard SQL. However, sometimes it is necessary to use "legacy" format as some functions have not yet been ported by Google to the newer format.
 
+Standard SQL supports [temp tables](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#with_query_name) which can make your queries more readable than using lots of subselects.
+
 ### Billing
 
 BigQuery is billed by the amount of data queried. Querying the entire prescribing table costs about 20 cents. You should bear these costs in mind if running large numbers of queries. Good practice is to extract, say, one month of data to a new table to design your queries, e.g. running
