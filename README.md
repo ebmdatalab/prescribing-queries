@@ -6,6 +6,8 @@ Documentation about common queries against the prescribing dataset.
 
 You will need a google account with the correct permissions (set up by an administrator) to access our BigQuery account.
 
+Then follow [this quickstart](https://cloud.google.com/bigquery/quickstart-web-ui) (ignoring the first section "Before you begin")
+
 ### Legacy vs Standard
 
 BigQuery provides a SQL-like interface to massive datasets.  It has two flavours, "legacy" and "standard". When running a query, the default is "legacy"; you must select "standard" in the options section to use that.  Nearly all the examples here are in "standard" format, which is compatible with standard SQL. However, sometimes it is necessary to use "legacy" format as some functions have not yet been ported by Google to the newer format.
