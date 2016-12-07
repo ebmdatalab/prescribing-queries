@@ -95,4 +95,4 @@ period of time, allowing the patient to take less frequent doses).
 Modified release tablets are available in 50mg, 100mg, 150mg, 200mg,
 300mg and 400mg pills.
 
-![image](.//raw/master/bnf_code_understander.png)
+![image](https://raw.githubusercontent.com/ebmdatalab/prescribing-queries/master/bnf_code_understander.png)
