@@ -43,7 +43,7 @@ LIMIT 1000
 * `hscic:practices`: all the practices in England. Updated monthly. Practices with a `setting` of `4` are standard GP practices (see below for a full list of `settings`s)
 * `hscic:practice_statistics`: total list size, STAR-PU, ASTRO-PU and list sizes stratified by gender and age group for each practice. Updated monthly.
 * `hscic:presentation`: ADQs and related data for each BNF code. Currently updated manually as needed.
-* `hscic:tariff`: The Tariff categories (`A`, `C`, or `M`) for each drug that is in Part VIIa of the Drug Tariff. NP8 drugs are omitted from the list. Currently updated manually, from Setember (this can be backfilled when we need it)
+* `hscic:tariff`: The Tariff categories (`A`, `C`, or `M`) for each drug that is in Part VIIIa of the Drug Tariff. NP8 drugs are omitted from the list. Currently updated manually, from Setember (this can be backfilled when we need it)
 
 ## Practice settings
 
