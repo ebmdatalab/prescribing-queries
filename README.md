@@ -96,7 +96,7 @@ The last few characters identify individual presentations, and a way
 of identifying their generic equivalents.
 
 The image below shows how you might examine Tramadol. Tramadol is an
-opiod paid medicine, available in the UK as tablets (i.e. pills),
+opiod pain medicine, available in the UK as tablets (i.e. pills),
 capsules (i.e. gelatine things), patches, liquids and more.  Just
 focussing on tablets, these are available as standard tablets, and
 modified release tablets (which are absorbed by the body over a longer
