@@ -28,7 +28,7 @@ SELECT *
 FROM ebmdatalab.hscic.prescribing
 WHERE month = TIMESTAMP('2016-06-01')
 ```
-...and selecting "save to table". If you then save this to a table `ebmdatalb.tmp.<something>`, then you can continue to design your query like:
+...and selecting "save to table". If you then save this to a table `ebmdatalab.tmp.<something>`, then you can continue to design your query like:
 
 ```sql
 SELECT *
@@ -40,10 +40,11 @@ LIMIT 1000
 ### Overview of datasets in bigquery
 
 * `hscic:prescribing`: the main prescribing dataset. Updated monthly. Data going back to Aug 2010.
-* `hscic:practices`: all the practices in England. Updated monthly. Practices with a `setting` of `4` are standard GP practices (see below for a full list of `settings`s)
-* `hscic:practice_statistics`: total list size, STAR-PU, ASTRO-PU and list sizes stratified by gender and age group for each practice. Updated monthly.
-* `hscic:presentation`: ADQs and related data for each BNF code. Currently updated manually as needed.
-* `hscic:tariff`: The Tariff categories (`A`, `C`, or `M`) for each drug that is in Part VIIIa of the Drug Tariff. NP8 drugs are omitted from the list. Currently updated manually, from Setember (this can be backfilled when we need it)
+* `hscic:practices`: all the practices in England. Updated monthly. Contains latest month's data only (but includes closed practices). Practices with a `setting` of `4` are standard GP practices (see below for a full list of `setting`s). 
+* `hscic:practice_statistics`: total list size, and list sizes stratified by gender and age group for each practice. Updated monthly. Contains latest month's data only. Also contains calculated population weightings related to prescribing (STAR-PU and ASTRO-PU), refer to [guidance](http://www.hscic.gov.uk/prescribing/measures) and [code](openprescribing/openprescribing/frontend/model_prescribing_units.py).
+* `hscic:presentation`: Average Daily Quantities (ADQs) and related data for each BNF code. Currently updated manually as needed.
+* `hscic:tariff`: The Tariff categories (`A`, `C`, or `M`) for each drug that is in Part VIIIa of the Drug Tariff. NP8 (non-Part VIIIa) drugs are omitted from the list. Currently updated manually, from September (this can be backfilled when we need it). Currently contains latest month's data only.
+* For more detail on the data sources, refer to [this](openprescribing-data/manifest.json).
 
 ## Practice settings
 
