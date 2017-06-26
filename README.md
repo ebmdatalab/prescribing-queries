@@ -40,6 +40,8 @@ LIMIT 1000
 ### Overview of datasets in bigquery
 
 * `hscic:prescribing`: the main prescribing dataset. Updated monthly. Data going back to Aug 2010.
+* `hscic:normalised_prescribing_standard`: a view on the `prescribing` table that normalises BNF code changes to the most recent version of a BNF code for any given presentation. In most cases, this is the table you will want to query.
+    * `hscic:normalised_prescribing_legacy`: the same as above, but in `legacy` format. In BigQuery, you must use the `legacy` dialect to query `legacy` views.
 * `hscic:practices`: all the practices in England. Updated monthly. Practices with a `setting` of `4` are standard GP practices (see below for a full list of `settings`s)
 * `hscic:practice_statistics`: total list size, STAR-PU, ASTRO-PU and list sizes stratified by gender and age group for each practice. Updated monthly.
 * `hscic:presentation`: ADQs and related data for each BNF code. Currently updated manually as needed.
