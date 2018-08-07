@@ -51,10 +51,10 @@ LIMIT 1000
     * `practice`: Identifier of practice
     * `bnf_code`: BNF code of presentation
     * `bnf_name`: Name of presentation in BNF
-    * `items`: TODO
-    * `net_cost`: TODO
-    * `actual_cost`: TODO
-    * `quantity` TODO
+    * `items`: Number of items, where "item" means "appearance on a prescription"
+    * `net_cost`: The cost of the presentation that month to that practice, according to the Drug Tariff
+    * `actual_cost`: The actual cost when taking into account adjustments for bulk purchases, out of pocket expenses, etc. This is the "cost" field that we usually want to query
+    * `quantity`: number of pills/grams/millilitres/dressings/ampoules prescribed
     * `month`: Month, as a `TIMESTAMP` of the first millisecond of the month
 
 * `hscic.normalised_prescribing_standard` and `hscic.normalised_prescribing_legacy`
@@ -152,11 +152,12 @@ LIMIT 1000
     * `category`
     * `date`
 
+
 TODO:
-  * `hscic.ppu_savings`
-  * `dmd.ncsoconcession`
-  * `dmd.product`
-  * `dmd.tariffprice`
+  * `hscic.ppu_savings`: price per unit savings for each month
+  * `dmd.ncsoconcession`: temporary alterations to official Drug Tariff prices in response to things like shortages, etc
+  * `dmd.product`: a table allowing joining from BNF codes (in prescribing data) to DMD SNOMED codes. Also has Drug Tariff category, if it's blacklisted, and a few other useful bits of metadta
+  * `dmd.tariffprice`: Drug Tariff prices
   * `dmd.vmpp`
 
 ## Practice settings
