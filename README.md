@@ -17,7 +17,7 @@ BigQuery provides a SQL-like interface to massive datasets.  It has two dialects
 
 Standard SQL supports [temp tables](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#with_query_name) which can make your queries more readable than using lots of subqueries.
 
-The main advantage of Legacy SQL is its more extensive range of [aggregate functions](https://cloud.google.com/bigquery/docs/reference/legacy-sql#functions), and in particular, [window functions](https://cloud.google.com/bigquery/docs/reference/legacy-sql#syntax-window-functions).  However, it is something of a moving target with new functions being added to Standard SQL all the time.
+Legacy SQL used to have a more extensive range of [aggregate functions](https://cloud.google.com/bigquery/docs/reference/legacy-sql#functions), and in particular, [window functions](https://cloud.google.com/bigquery/docs/reference/legacy-sql#syntax-window-functions).  However, OpenPrescribing is now able to use standard SQL exclusively.
 
 A comparison between the two formats is [here](https://cloud.google.com/bigquery/docs/reference/standard-sql/migrating-from-legacy-sql#comparison_of_legacy_and_standard_sql).
 
@@ -42,7 +42,9 @@ LIMIT 1000
 ### Overview of tables in BigQuery
 
 * `hscic.prescribing`
-  * The main prescribing dataset. Updated monthly. Data going back to Aug 2010.
+  * The main prescribing dataset.
+  * Updated monthly. Data going back to Aug 2010.
+  * Data from https://apps.nhsbsa.nhs.uk/infosystems/data/showDataSelector.do?reportId=124
   * You probably want to query one of the `normalised_prescribing_*` tables, described below
   * Contains one row per practice per presentation per month
   * Fields:
@@ -58,30 +60,29 @@ LIMIT 1000
     * `month`: Month, as a `TIMESTAMP` of the first millisecond of the month
 
 * `hscic.normalised_prescribing_standard` and `hscic.normalised_prescribing_legacy`
-  * Views on the `prescribing` table that normalise BNF code changes to the most recent version of a BNF code for any given presentation. In most cases, this is the table you will want to query.
+  * Views on the `prescribing` table that normalise the `pct` and `bnf_code` fields as described below.
+  * In most cases, this is the table you will want to query.
   * The data is the same in both tables.  Use `normalised_prescribing_standard` when you want to use Standard SQL, and `normalised_prescribing_legacy` when you want to use Legacy SQL.
   * Fields
     * As for the `prescribing` table, except:
-      * The `pct` field is renamed to `ccg_id`, and is the identifier of the CCG that the practice is _currently_ in, as it may have moved between CCGs (TODO: check this)
+      * The `pct` field is renamed to `ccg_id`, and is the identifier of the CCG that the practice is _currently_ in, as it may have moved between CCGs
       * The `bnf_code` field is the most recent version of the BNF code
 
 * `hscic.practices`:
-  * All the practices in England. Updated monthly. Practices with a `setting` of `4` are standard GP practices (see below for a full list of `settings`s)
+  * All the practices in England.
+  * Updated quarterly.
+  * Data from https://digital.nhs.uk/services/organisation-data-service/data-downloads/gp-and-gp-practice-related-data
+  * Practices with a `setting` of `4` are standard GP practices (see below for a full list of `settings`s)
   * Fields:
     * `code`: Identifier of practice
     * `name`: Name of practice
-    * `address1`: Portion of address
-    * `address2`:
-    * `address3`:
-    * `address4`:
-    * `address5`:
-    * `postcode`:
-    * `location`:
+    * `address1` to `address5`, `postcode`: Portions of address
+    * `location`: Location of practice in WG84 format
     * `ccg_id`: Identifier of practice's current CCG
     * `setting`: See below for a full list of `settings`s
     * `close_date`: Date practice closed
-    * `join_provider_date`: TODO
-    * `leave_provider_date`: TODO
+    * `join_provider_date`: Date practice joined CCG
+    * `leave_provider_date`: Date practice closed
     * `open_date`: Data practice opened
     * `status_code`: One of the following:
         *`A`: Active
@@ -92,7 +93,9 @@ LIMIT 1000
         *`U`: Unknown
 
 * `hscic.ccgs`:
-  * All the CCGs in England.  Updated monthly.
+  * All the CCGs in England.
+  * Updated quarterly.
+  * Data from https://digital.nhs.uk/services/organisation-data-service/data-downloads/other-nhs-organisations
   * Fields:
     * `code`: Identifier of CCG
     * `name`: Name of CCG
@@ -103,40 +106,31 @@ LIMIT 1000
       * `Unknown`
     * `open_date`: Date CCG was formed
     * `close_date`: Date CCG closed
-    * `address`: Address of ?
-    * `postcode`:
+    * `address`, `postcode`: Address of principal office
 
 * `hscic.practice_statistics`:
-  * Total list size, STAR-PU, ASTRO-PU, and list sizes stratified by gender and age group for each practice. Updated monthly.
-  * Fields: ...
+  * Total list size, STAR-PU, ASTRO-PU, and list sizes stratified by gender and age group for each practice.
+  * Updated monthly.
+  * Data from https://digital.nhs.uk/data-and-information/publications/statistical/patients-registered-at-a-gp-practice
+  * Fields:
     * `month`
-    * `male_0_4`
-    * `female_0_4`
-    * `male_5_14`
-    * `male_15_24`
-    * `male_25_34`
-    * `male_35_44`
-    * `male_45_54`
-    * `male_55_64`
-    * `male_65_74`
-    * `male_75_plus`
-    * `female_5_14`
-    * `female_15_24`
-    * `female_25_34`
-    * `female_35_44`
-    * `female_45_54`
-    * `female_55_64`
-    * `female_65_74`
-    * `female_75_plus`
+    * `practice`
+    * `pct_id`
     * `total_list_size`
     * `astro_pu_cost`
     * `astro_pu_items`
     * `star_pu`
-    * `pct_id`
-    * `practice`
+    * For each age group in :`0_4`, `15_24`, `25_34`, `35_44`, `45_54`, `55_64`, `5_14`, `65_74`, `75_plus`
+        * `female_{age_group}`
+        * `male_{age_group}`
 
 * `hscic.presentation`:
-  * ADQs and related data for each BNF code. Currently updated manually as needed.
+  * BNF code, name, ADQs for each presentation.
+  * BNF data:
+    * Updated monthly
+    * Data from https://apps.nhsbsa.nhs.uk/infosystems/data/showDataSelector.do?reportId=126
+  * ADQs updated manually when new data available.
+  * Fields:
     * `bnf_code`
     * `name`
     * `is_generic`
@@ -145,20 +139,61 @@ LIMIT 1000
     * `adq_unit`
     * `percent_of_adq`
 
-* `hscic.tariff`:
-  * The Tariff categories (`A`, `C`, or `M`) for each drug that is in Part VIIIa of the Drug Tariff. NP8 drugs are omitted from the list. Currently updated manually, from Setember (this can be backfilled when we need it)
-    * `bnf_name`
-    * `bnf_code`
-    * `category`
+* `hscic.ppu_savings`:
+  * Price per Unit savings
+  * Updated monthly based on prescribing data
+  * Fields:
     * `date`
+    * `pct_id`
+    * `practice_id`
+    * `bnf_code`
+    * `lowest_decile`
+    * `quantity`
+    * `price_per_unit`
+    * `possible_savings`
+    * `formulation_swap`
 
+* `dmd.product`:
+  * Products (both AMPs and VMPS) in dm+d
+  * Updated monthly
+  * Data from https://isd.digital.nhs.uk/trud3/user/authenticated/group/0/pack/6/subpack/24/releases
+  * See https://www.nhsbsa.nhs.uk/sites/default/files/2017-02/dmd_Implemention_Guide_%28Primary_Care%29_v1.0.pdf for details of fields
 
-TODO:
-  * `hscic.ppu_savings`: price per unit savings for each month
-  * `dmd.ncsoconcession`: temporary alterations to official Drug Tariff prices in response to things like shortages, etc
-  * `dmd.product`: a table allowing joining from BNF codes (in prescribing data) to DMD SNOMED codes. Also has Drug Tariff category, if it's blacklisted, and a few other useful bits of metadta
-  * `dmd.tariffprice`: Drug Tariff prices
-  * `dmd.vmpp`
+* `dmd.tariffprice`:
+  * Monthly prices according to the Drug Tariff
+  * Updated monthly
+  * Data from https://www.nhsbsa.nhs.uk/pharmacies-gp-practices-and-appliance-contractors/drug-tariff/drug-tariff-part-viii/
+  * Fields:
+    * `date`
+    * `vmpp`
+    * `product`
+    * `tariff_category`
+    * `price_pence`
+
+* `dmd.ncsoconcession`:
+  * Temporary alterations to official Drug Tariff prices in response to things like shortages, etc
+  * Updated monthly, or when new data is available
+  * Data from http://psnc.org.uk/dispensing-supply/supply-chain/generic-shortages/ncso-archive/
+  * Fields:
+    * `vmpp`
+    * `date`
+    * `drug`
+    * `pack_size`
+    * `price_concession_pence`
+
+* `dmd.vmpp`
+  * Virtual Medicinal Product Packs (part of the dm+d data model, see our [dm+d notes](https://github.com/ebmdatalab/openprescribing/wiki/PPD-data-model#dmd-notes) for more details)
+  * Used for linking tariffs and concessions to products
+  * Fields:
+    * `vvpid`: Primary key, corresponds to `tariffprice.vmpp` and `ncsoconcession.vmpp`
+    * `invalid`
+    * `nm`
+    * `abbrevnm`
+    * `vpid`
+    * `qtyval`
+    * `qty_uomcd`
+    * `combpackcd`
+
 
 ## Practice settings
 
