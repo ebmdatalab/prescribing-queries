@@ -182,8 +182,17 @@ LIMIT 1000
     * `price_concession_pence`
 
 * `dmd.vmpp`
-  * Virtual Medicinal Product Packs (part of the dm+d data model)
+  * Virtual Medicinal Product Packs (part of the dm+d data model, see our [dm+d notes](https://github.com/ebmdatalab/openprescribing/wiki/PPD-data-model#dmd-notes) for more details)
   * Used for linking tariffs and concessions to products
+  * Fields:
+    * `vvpid`: Primary key, corresponds to `tariffprice.vmpp` and `ncsoconcession.vmpp`
+    * `invalid`
+    * `nm`
+    * `abbrevnm`
+    * `vpid`
+    * `qtyval`
+    * `qty_uomcd`
+    * `combpackcd`
 
 
 ## Practice settings
